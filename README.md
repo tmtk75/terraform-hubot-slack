@@ -21,7 +21,9 @@ api_key = "aaaaaaaa-1111-bbbb-2222-cccccccccccc"
 
 Let's say you already have a token of hubot for Slack, type like this.  
 ```
-$ VAR_FILE=heroku.tfvars SLACK_TOKEN=<your-token> make apply
+$ VAR_FILE=heroku.tfvars \
+  SLACK_TOKEN=<your-token> \
+  SLACK_BOTNAME=<your-botname> make apply
 heroku_app.default: Creating...
   config_vars.#:                     "" => "1"
   config_vars.0.HEROKU_URL:          "" => "http://secret-island-8419.herokuapp.com"
@@ -45,3 +47,15 @@ hubot --create bot
 ```
 
 This will create a new git repository to be deployed onto heroku.
+
+```
+$ make push
+```
+
+And this will push the repository, so it's deploy.
+
+
+That's it.
+
+
+Hey, call the bot on your team of Slack!

@@ -9,7 +9,7 @@ bot: hubot redis
 		cp ../Procfile ./Procfile; git commit -am "--adapter slack"; \
 		)
 
-push: bot
+push:
 	(cd bot; \
 		git remote add origin `terraform output -state=../terraform.tfstate heroku_app.default.git_url`; \
 		git push origin master; \
@@ -29,7 +29,7 @@ node_modules/.bin/hubot:
 
 
 ## terraform for heroku
-tf_opts=-var-file $(VAR_FILE) -var slack_token=$(SLACK_TOKEN)
+tf_opts=-var-file $(VAR_FILE) -var slack_token=$(SLACK_TOKEN) -var slack_botname=$(SLACK_BOTNAME)
 plan:
 	terraform plan $(tf_opts)
 

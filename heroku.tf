@@ -1,6 +1,7 @@
 variable "email" {}
 variable "api_key" {}
 variable "slack_token" {}
+variable "slack_botname" {}
 variable "heroku_app_name" {
     default = "secret-island-8419"
 }
@@ -16,7 +17,7 @@ resource "heroku_app" "default" {
     region = "us"
     config_vars {
         HEROKU_URL="http://${var.heroku_app_name}.herokuapp.com"
-        HUBOT_SLACK_BOTNAME="${var.heroku_app_name}"
+        HUBOT_SLACK_BOTNAME="${var.slack_botname}"
         HUBOT_SLACK_TEAM="kii"
         HUBOT_SLACK_TOKEN="${var.slack_token}"
     }
