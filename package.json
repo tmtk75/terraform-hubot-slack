@@ -1,0 +1,9 @@
+{
+  "name": "terraform-hubot-slack",
+  "version": "0.1.0",
+  "author": "tmtk75",
+  "dependencies": {
+    "coffee-script": "*",
+    "hubot": "*"
+  }
+}

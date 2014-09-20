@@ -1,0 +1,7 @@
+node_modules
+.*.swp
+dump.rdb
+bot
+*.tfstate
+*.tfstate.backup
+*.tfplan
