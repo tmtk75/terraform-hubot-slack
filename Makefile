@@ -1,16 +1,20 @@
 ## local run
 default: brain
 
+slack_botname=`terraform output -state=./terraform.tfstate heroku_app.default.slack_botname`
+bot_dir=$(slack_botname).git
+
 bot: hubot redis
-	hubot --create bot
-	(cd bot; \
+	hubot --create $(bot_dir)
+	(cd $(bot_dir); \
 		git init; git add .; git commit -m "initial commit"; \
 		npm install hubot-slack --save; git commit -am "fubot-slack"; \
 		cp ../Procfile ./Procfile; git commit -am "--adapter slack"; \
+		cp ../hearing.coffee ./scripts; git add scripts/*.coffee; git commit -am "add a simple script to hear"; \
 		)
 
 push:
-	(cd bot; \
+	(cd $(bot_dir); \
 		git remote add origin `terraform output -state=../terraform.tfstate heroku_app.default.git_url`; \
 		git push origin master; \
 		)
@@ -29,7 +33,10 @@ node_modules/.bin/hubot:
 
 
 ## terraform for heroku
-tf_opts=-var-file $(VAR_FILE) -var slack_token=$(SLACK_TOKEN) -var slack_botname=$(SLACK_BOTNAME)
+tf_opts=-var-file $(VAR_FILE) \
+	-var slack_token=$(SLACK_TOKEN) \
+	-var slack_botname=$(SLACK_BOTNAME) \
+	-var slack_team=$(SLACK_TEAM)
 plan:
 	terraform plan $(tf_opts)
 
@@ -40,6 +47,7 @@ show:
 	terraform show terraform.tfstate
 
 destroy: destroy.tfplan
+	rm -rf $(bot_dir)
 	terraform apply destroy.tfplan
 
 destroy.tfplan:

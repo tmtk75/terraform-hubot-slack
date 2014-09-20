@@ -23,6 +23,7 @@ Let's say you already have a token of hubot for Slack, type like this.
 ```
 $ VAR_FILE=heroku.tfvars \
   SLACK_TOKEN=<your-token> \
+  SLACK_TEAM=<your-tema> \
   SLACK_BOTNAME=<your-botname> make apply
 heroku_app.default: Creating...
   config_vars.#:                     "" => "1"
@@ -41,21 +42,28 @@ SLACK\_TOKEN is issued here, https://kii.slack.com/services/new/hubot
 On the assumption you've already logged in heroku
 ```
 $ . .env
-$ make bot
+$ make bot push
 hubot --create bot
 ...
 ```
 
-This will create a new git repository to be deployed onto heroku.
-
-```
-$ make push
-```
-
-And this will push the repository, so it's deploy.
+This will create a new git repository to be deployed onto heroku,
+and will push the repository, so it's deploy.
 
 
-That's it.
-
-
+That's it.  
 Hey, call the bot on your team of Slack!
+
+
+## Retry
+```
+$ VAR_FILE=heroku.tfvars \
+  SLACK_TOKEN=<your-token> \
+  SLACK_TEAM=<your-tema> \
+  SLACK_BOTNAME=<your-botname> make destroy
+...
+$ make distclean
+```
+This cleans up all resources, local files and heroku instance.
+
+You can start from the top.
